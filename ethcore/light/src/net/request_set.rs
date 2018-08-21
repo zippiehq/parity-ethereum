@@ -73,7 +73,7 @@ impl RequestSet {
 	}
 
 	/// Remove a set of requests from the stack.
-	pub fn remove(&mut self, req_id: &ReqId, now: Instant) -> Option<Requests> {
+	pub fn remove(&mut self, req_id: ReqId, now: Instant) -> Option<Requests> {
 		let id = match self.ids.remove(&req_id) {
 			Some(id) => id,
 			None => return None,

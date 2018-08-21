@@ -43,8 +43,8 @@ enum Key {
 
 impl Key {
 	// get the string value of this key.
-	fn as_str(&self) -> &'static str {
-		match *self {
+	fn as_str(self) -> &'static str {
+		match self {
 			Key::ProtocolVersion => "protocolVersion",
 			Key::NetworkId => "networkId",
 			Key::HeadTD => "headTd",
@@ -85,7 +85,7 @@ impl Key {
 // helper for decoding key-value pairs in the handshake or an announcement.
 struct Parser<'a> {
 	pos: usize,
-	rlp: Rlp<'a>,
+	rlp: &'a Rlp<'a>,
 }
 
 impl<'a> Parser<'a> {
@@ -208,10 +208,10 @@ impl Capabilities {
 ///   - chain status
 ///   - serving capabilities
 ///   - request credit parameters
-pub fn parse_handshake(rlp: Rlp) -> Result<(Status, Capabilities, Option<FlowParams>), DecoderError> {
+pub fn parse_handshake(rlp: &Rlp) -> Result<(Status, Capabilities, Option<FlowParams>), DecoderError> {
 	let mut parser = Parser {
 		pos: 0,
-		rlp: rlp,
+		rlp,
 	};
 
 	let status = Status {
@@ -304,7 +304,7 @@ pub struct Announcement {
 }
 
 /// Parse an announcement.
-pub fn parse_announcement(rlp: Rlp) -> Result<Announcement, DecoderError> {
+pub fn parse_announcement(rlp: &Rlp) -> Result<Announcement, DecoderError> {
 	let mut last_key = None;
 
 	let mut announcement = Announcement {
@@ -320,7 +320,7 @@ pub fn parse_announcement(rlp: Rlp) -> Result<Announcement, DecoderError> {
 
 	let mut parser = Parser {
 		pos: 4,
-		rlp: rlp,
+		rlp,
 	};
 
 	while let Some((key, item)) = parser.get_next()? {

@@ -118,8 +118,8 @@ pub fn build<F>(cht_num: u64, mut fetcher: F) ->  Option<CHT<MemoryDB<KeccakHash
 	}
 
 	Some(CHT {
-		db: db,
-		root: root,
+		db,
+		root,
 		number: cht_num,
 	})
 }
