@@ -35,7 +35,7 @@ use io::{TimerToken, IoContext, IoHandler};
 use light::Cache as LightDataCache;
 use light::client::{LightChainClient, LightChainNotify};
 use number_prefix::{binary_prefix, Standalone, Prefixed};
-use parity_rpc::is_major_importing_or_waiting;
+use parity_rpc::is_major_importing;
 use parity_rpc::informant::RpcStats;
 use ethereum_types::H256;
 use bytes::Bytes;
@@ -128,7 +128,7 @@ impl InformantData for FullNodeInformantData {
 
 	fn is_major_importing(&self) -> bool {
 		let state = self.sync.as_ref().map(|sync| sync.status().state);
-		is_major_importing_or_waiting(state, self.client.queue_info(), false)
+		is_major_importing(state, self.client.queue_info())
 	}
 
 	fn report(&self) -> Report {
