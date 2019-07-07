@@ -63,6 +63,7 @@ impl IpfsHandler {
 			Codec::EthereumBlockList => self.block_list(hash),
 			Codec::EthereumTx => self.transaction(hash),
 			Codec::EthereumStateTrie => self.state_trie(hash),
+			Codec::EthereumStorageTrie => self.storage_trie(hash),
 			Codec::Raw => self.contract_code(hash),
 			_ => return Err(Error::UnsupportedCid),
 		}
@@ -93,6 +94,13 @@ impl IpfsHandler {
 
 	/// Get state trie node by hash and return as raw binary.
 	fn state_trie(&self, hash: H256) -> Result<Out> {
+		let data = self.client().state_data(&hash).ok_or(Error::StateRootNotFound)?;
+
+		Ok(Out::OctetStream(data))
+	}
+
+	/// Get storage trie node by hash and return as raw binary.
+	fn storage_trie(&self, hash: H256) -> Result<Out> {
 		let data = self.client().state_data(&hash).ok_or(Error::StateRootNotFound)?;
 
 		Ok(Out::OctetStream(data))
