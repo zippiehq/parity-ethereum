@@ -29,7 +29,7 @@ RUN mkdir -p /opt/parity/data && \
     chmod g+rwX /opt/parity/data && \
     mkdir -p /opt/parity/release
 
-COPY --from=builder parity/parity /opt/parity/release
+COPY --from=builder /build/parity-ethereum/target/release/parity /opt/parity/release/
 
 WORKDIR /opt/parity/data
 
