@@ -1,1 +1,1 @@
-scripts/docker/centos/Dockerfile.build
+scripts/docker/hub/Dockerfile
