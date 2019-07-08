@@ -29,9 +29,9 @@ RUN mkdir -p /opt/parity/data && \
     chmod g+rwX /opt/parity/data && \
     mkdir -p /opt/parity/release
 
-COPY --from=builder /build/parity-ethereum/target/release/parity /opt/parity/release/
+COPY --from=builder /build/parity-ethereum/target/release/parity /bin/parity
 
-WORKDIR /opt/parity/data
+WORKDIR /home/parity
 
 # exposing default ports
 #
@@ -45,4 +45,4 @@ USER 1001
 
 #if no base path provided, assume it's current workdir
 CMD ["--base-path","."]
-ENTRYPOINT ["/opt/parity/release/parity"]
+ENTRYPOINT ["/bin/parity"]
