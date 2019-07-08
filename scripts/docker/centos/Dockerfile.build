@@ -28,7 +28,7 @@ FROM centos:latest
 COPY --from=builder /build/parity-ethereum/target/release/parity /bin/parity
 
 WORKDIR /home/parity
-RUN chown 
+RUN chown 1000:1000 /home/parity
 
 # exposing default ports
 #
