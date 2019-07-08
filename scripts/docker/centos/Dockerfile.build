@@ -28,7 +28,6 @@ FROM centos:latest
 COPY --from=builder /build/parity-ethereum/target/release/parity /bin/parity
 
 WORKDIR /home/parity
-RUN chown 1000:1000 /home/parity
 
 # exposing default ports
 #
@@ -36,8 +35,5 @@ RUN chown 1000:1000 /home/parity
 #      ipfs store     ui   rpc  ws   listener  discovery
 #      ↓    ↓         ↓    ↓    ↓    ↓         ↓
 EXPOSE 5001 8082 8083 8180 8545 8546 30303/tcp 30303/udp
-
-# switch to non-root user
-USER 1000
 
 ENTRYPOINT ["/bin/parity"]
